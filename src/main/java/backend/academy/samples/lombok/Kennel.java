@@ -19,13 +19,6 @@ public class Kennel {
     @Singular
     private Set<Dog> dogs;
 
-    record Dog(
-        @NonNull Integer id,
-        @NonNull String name,
-        @NonNull String breed
-    ) {
-    }
-
     public static void main(String[] args) {
         Kennel kennel = Kennel.builder()
             .id(1)
@@ -44,10 +37,18 @@ public class Kennel {
         });
 
         try {
-            kennel.dogs.forEach(_ -> NonInstantiatableUtilityClass.sneakyThrowCheckedException()); // no compilation error
+            kennel.dogs.forEach(
+                _ -> NonInstantiatableUtilityClass.sneakyThrowCheckedException()); // no compilation error
         } catch (Exception e) {
             log.info("Caught exception from outside lambda!", e);
         }
+    }
+
+    record Dog(
+        @NonNull Integer id,
+        @NonNull String name,
+        @NonNull String breed
+    ) {
     }
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)

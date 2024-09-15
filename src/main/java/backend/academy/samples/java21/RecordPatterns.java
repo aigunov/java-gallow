@@ -10,7 +10,7 @@ public class RecordPatterns {
 
         // Prior to Java 16
         if (obj instanceof String) {
-            String s = (String) obj;
+            String s = obj;
             //... use s ...
         }
 
@@ -23,10 +23,6 @@ public class RecordPatterns {
 
         Point p = new Point(42, 42);
         printSum2(p);
-    }
-
-    // As of Java 16
-    record Point(int x, int y) {
     }
 
     static void printSum(Object obj) {
@@ -42,13 +38,6 @@ public class RecordPatterns {
         if (obj instanceof Point(int x, int y)) {
             System.out.println(x + y);
         }
-    }
-
-    // Nested record patterns
-    record Rectangle(Point upperLeft, Point lowerRight) {
-    }
-
-    record Circle(Point center, int radius) {
     }
 
     static double calcArea(Object obj) {
@@ -84,25 +73,36 @@ public class RecordPatterns {
         }
     }
 
+    // As of Java 16
+    record Point(int x, int y) {
+    }
+
+    // Nested record patterns
+    record Rectangle(Point upperLeft, Point lowerRight) {
+    }
+
+    record Circle(Point center, int radius) {
+    }
+
     static class SwitchRecordPattern {
-        record Point(int x, int y) {
-        }
-
-        sealed interface Figure permits Rectangle, Circle {
-        }
-
-        record Rectangle(Point upperLeft, Point lowerRight) implements Figure {
-        }
-
-        record Circle(Point center, int radius) implements Figure {
-        }
-
         double calcArea(Figure obj) {
             return switch (obj) {
                 case null -> 0.0;
                 case Rectangle(Point(var x1, var y1), Point(var x2, var y2)) -> (x2 - x1) * (y2 - y1);
                 case Circle(var center, var radius) -> Math.PI * radius * radius;
             };
+        }
+
+        sealed interface Figure permits Rectangle, Circle {
+        }
+
+        record Point(int x, int y) {
+        }
+
+        record Rectangle(Point upperLeft, Point lowerRight) implements Figure {
+        }
+
+        record Circle(Point center, int radius) implements Figure {
         }
 
     }

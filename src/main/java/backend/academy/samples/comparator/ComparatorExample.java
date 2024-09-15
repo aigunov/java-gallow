@@ -36,7 +36,7 @@ public class ComparatorExample {
 
         // Chaining multiple Comparators
         // Sort by Salary. If Salary is same then sort by Name
-        employees.sort(Comparator.<Employee>comparingDouble(Employee::salary).thenComparing(Employee::name));
+        employees.sort(Comparator.comparingDouble(Employee::salary).thenComparing(Employee::name));
         log.info("Employees (Sorted by Salary and Name) : {}", employees);
     }
 }

@@ -1,0 +1,213 @@
+{
+    "words": {
+        "categories": {
+            "animals": {
+                "easy": [
+                    {
+                        "word": "кошка",
+                        "hint": ""
+                    },
+                    {
+                        "word": "собака",
+                        "hint": ""
+                    },
+                    {
+                        "word": "лиса",
+                        "hint": ""
+                    },
+                    {
+                        "word": "мышь",
+                        "hint": ""
+                    },
+                    {
+                        "word": "змея"
+                    }
+                ],
+                "middle": [
+                    {
+                        "word": "",
+                        "hint": ""
+                    },
+                    {
+                        "word": "",
+                        "hint": ""
+                    },
+                    {
+                        "word": "",
+                        "hint": ""
+                    },
+                    {
+                        "word": "",
+                        "hint": ""
+                    },
+                    {
+                        "word": "",
+                        "hint": ""
+                    }
+                ],
+                "hard": [
+                    {
+                        "word": "",
+                        "hint": ""
+                    },
+                    {
+                        "word": "",
+                        "hint": ""
+                    },
+                    {
+                        "word": "",
+                        "hint": ""
+                    },
+                    {
+                        "word": "",
+                        "hint": ""
+                    },
+                    {
+                        "word": "",
+                        "hint": ""
+                    }
+                ]
+            }
+        },
+        "fruits": {
+            "easy": [
+                {
+                    "word": "кошка",
+                    "hint": ""
+                },
+                {
+                    "word": "собака",
+                    "hint": ""
+                },
+                {
+                    "word": "лиса",
+                    "hint": ""
+                },
+                {
+                    "word": "мышь",
+                    "hint": ""
+                },
+                {
+                    "word": "змея"
+                }
+            ],
+            "middle": [
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                }
+            ],
+            "hard": [
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                }
+            ]
+        },
+        "professions": {
+            "easy": [
+                {
+                    "word": "кошка",
+                    "hint": ""
+                },
+                {
+                    "word": "собака",
+                    "hint": ""
+                },
+                {
+                    "word": "лиса",
+                    "hint": ""
+                },
+                {
+                    "word": "мышь",
+                    "hint": ""
+                },
+                {
+                    "word": "змея"
+                }
+            ],
+            "middle": [
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                }
+            ],
+            "hard": [
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                },
+                {
+                    "word": "",
+                    "hint": ""
+                }
+            ]
+        }
+    },
+    "texts": {
+        "lose": "YOU LOSE",
+        "win": "YOU WON",
+        "choose_category": "Выберите категория",
+        "choose_level": "Выберите уровень сложнсоти"
+    }
+}

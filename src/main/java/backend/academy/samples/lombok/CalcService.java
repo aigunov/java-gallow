@@ -21,6 +21,13 @@ public class CalcService {
     @Getter
     private Double doubleValue;
 
+    public static void main(String[] args) {
+        var service = new CalcService("1.0");
+        service.calculateDoubleValue();
+
+        log.info(service.doubleValue());
+    }
+
     private void calculateDoubleValue() {
         log.info("Calculating double value");
         double a = 2.0;
@@ -28,12 +35,5 @@ public class CalcService {
             a = a * 1.5;
         }
         doubleValue = a;
-    }
-
-    public static void main(String[] args) {
-        var service = new CalcService("1.0");
-        service.calculateDoubleValue();
-
-        log.info(service.doubleValue());
     }
 }

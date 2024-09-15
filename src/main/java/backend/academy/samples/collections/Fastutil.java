@@ -116,12 +116,14 @@ public class Fastutil {
         int[] a = new int[] {5, 1, 9};
         int[] b = new int[] {6, 2, 3};
         IntIterator wrapped = IntIterators.wrap(a); // This iterator will return 5, 1, 9.
-        IntIterator k = IntIterators.concat(intListIterator, wrapped); // This iterator will return 0, 1, ..., 9, 5, 1, 9
+        IntIterator k =
+            IntIterators.concat(intListIterator, wrapped); // This iterator will return 0, 1, ..., 9, 5, 1, 9
 
         // It is easy to build lists and sets on the fly using the of static factory methods.
         // For maps you can use the constructors that take key and value arrays (array-based constructors for list and set exist too):
         IntSet s = IntOpenHashSet.of(1, 2, 3); // This set will contain 1, 2, and 3
-        Char2IntMap m = new Char2IntRBTreeMap(new char[] {'@', '-'}, new int[] {0, 1}); // This map will map '@' to 0 and '-' to 1
+        Char2IntMap m =
+            new Char2IntRBTreeMap(new char[] {'@', '-'}, new int[] {0, 1}); // This map will map '@' to 0 and '-' to 1
 
         // Whenever you have some data structure, it is easy to serialize it in an efficient (buffered) way, or to dump their content in textual form:
         BinIO.storeObject(s, "foo"); // This method call will save s in the file named "foo"

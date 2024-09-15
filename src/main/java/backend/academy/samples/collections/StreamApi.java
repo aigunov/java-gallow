@@ -8,11 +8,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class StreamApi {
-    public enum Gender {MALE, FEMALE}
-
-    public record Footballer(String name, int age, Gender gender, List<String> positions) {
-    }
-
     private final List<Footballer> footballerList = List.of(
         new Footballer("Messi", 32, Gender.MALE, List.of("CF", "CAM", "RF")),
         new Footballer("Griezmann", 28, Gender.MALE, List.of("CF", "CAM", "LF")),
@@ -183,5 +178,10 @@ public class StreamApi {
             .filter(footballer -> footballer.gender().equals(Gender.FEMALE))
             .filter(footballer -> footballer.age() > 23)
             .toList();
+    }
+
+    public enum Gender {MALE, FEMALE}
+
+    public record Footballer(String name, int age, Gender gender, List<String> positions) {
     }
 }
