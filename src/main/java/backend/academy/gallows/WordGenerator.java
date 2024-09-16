@@ -4,10 +4,10 @@ import backend.academy.gallows.model.Categories;
 import backend.academy.gallows.model.Levels;
 import backend.academy.gallows.model.Word;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Класс для извлечения из dictionary.json нужного слова по переданнам конфигурациям

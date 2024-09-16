@@ -14,13 +14,10 @@ public class CliParams {
 
     @Parameter(names = {"-log", "-verbose"}, description = "Level of verbosity")
     private final Integer verbose = 1;
-
-    @Parameter(names = "-groups", description = "Comma-separated list of group names to be run")
-    private String groups;
-
     @Parameter(names = "-debug", description = "Debug mode")
     private final boolean debug = false;
-
+    @Parameter(names = "-groups", description = "Comma-separated list of group names to be run")
+    private String groups;
     private Integer setterParameter;
 
     @Parameter(names = "-setterParameter", description = "A parameter annotation on a setter method")
