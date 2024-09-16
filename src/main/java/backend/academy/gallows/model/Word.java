@@ -1,9 +1,11 @@
 package backend.academy.gallows.model;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
-public class Word {
-    private String word;
-    private String hint;
-}
+@Getter
+@Setter
+public record Word (String word, String hint){}

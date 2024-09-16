@@ -22,7 +22,7 @@ public class GameSession {
     /**
      * Основной метод игровой сессии
      */
-    void session(){
+    public void session(){
 
     }
 
