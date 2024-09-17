@@ -1,5 +1,6 @@
 package backend.academy;
 
+import backend.academy.gallows.GameSession;
 import backend.academy.gallows.GameUIImpl;
 import java.util.Scanner;
 import lombok.experimental.UtilityClass;
@@ -8,10 +9,8 @@ import lombok.experimental.UtilityClass;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-//        System.out.print("Приветствуем вас. Представтесь пожалуйста: ");
-//        var game = new GameSession(sc.next());
-//        game.session();
-        var ui = new GameUIImpl();
-        ui.printEmoji("sdf");
+        System.out.println("Приветствуем вас. Представтесь пожалуйста: ");
+        var game = new GameSession("white");
+        game.session();
     }
 }

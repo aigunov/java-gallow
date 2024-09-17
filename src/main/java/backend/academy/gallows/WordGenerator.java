@@ -29,6 +29,8 @@ public class WordGenerator {
             var jsonNode = mapper.readTree(file);
             jsonNode = jsonNode.get(category.name().toLowerCase()).get(level.name().toLowerCase()).get(wordNum);
             word = mapper.treeToValue(jsonNode, Word.class);
+            word.levels(level);
+            word.category(category);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

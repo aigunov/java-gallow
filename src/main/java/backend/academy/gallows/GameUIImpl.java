@@ -84,7 +84,7 @@ public class GameUIImpl implements GameUI {
     }
 
     @Override
-    public void printGameWin(final String name) {
+    public void printGameWin() {
         try {
             jsonNode = mapper.readTree(file).get("game_menus").get("game_menu_win");
             Arrays.stream(mapper.treeToValue(jsonNode, String[].class))

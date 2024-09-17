@@ -9,7 +9,11 @@ public interface GameUI {
 
     void printIntermediateResults(final int solved, final int heats);
 
-    void printGameWin(final String name);
+    void printGameWin();
 
     void printGameLost();
+
+    void printEmoji(final String emojiType);
+
+    void printMenu(final String menuType);
 }
