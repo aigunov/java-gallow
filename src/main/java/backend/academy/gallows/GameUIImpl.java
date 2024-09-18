@@ -16,6 +16,13 @@ public class GameUIImpl implements GameUI {
     private final File file = new File("src/main/resources/ui.json");
     private JsonNode jsonNode;
 
+    /**
+     * Метод для отрисовки любого из меню
+     * @param menuType - принимает на вход строку
+     *                 в который определяется узел в json файле с интерфейсом
+     *                 если делать для каждого меню отдельный метод то
+     *                 между ними отличие будет в одну строчку
+     */
     public void printMenu(final String menuType) {
         try {
             jsonNode = mapper.readTree(file).get(NODE_OF_JSON_FILE).get(menuType);
@@ -27,6 +34,9 @@ public class GameUIImpl implements GameUI {
         }
     }
 
+    /**
+     * точно такой же как printMenu но для эмодзи
+     */
     public void printEmoji(final String emoji) {
         try {
             jsonNode = mapper.readTree(file).get(emoji);
@@ -37,6 +47,13 @@ public class GameUIImpl implements GameUI {
         }
     }
 
+    /**
+     * Метод для отрисовки самого висельник, я его назвал Тони
+     * какой конкретно из этап виселицы должен отрисоваться
+     * определяется по формуле  (level.hitpoint() - hitPoints) * level.step()
+     * для каждого уровня сложности определен свой step и hitpoint как кол-во жизней
+     * @param step
+     */
     @Override
     public void printTony(final int step) {
         try {
@@ -48,6 +65,9 @@ public class GameUIImpl implements GameUI {
         }
     }
 
+    /**
+     * метод для отрисовки слова красивым образом
+     */
     @Override
     public void printWord(final List<Character> letters, final String word) {
         StringBuilder output = new StringBuilder(); // Используем StringBuilder для построения строки результата
@@ -74,6 +94,9 @@ public class GameUIImpl implements GameUI {
         System.out.println(output.toString().trim());
     }
 
+    /**
+     * отрисовка промежуточного результата между шагами
+     */
     @Override
     public void printIntermediateResults(final int solved, final int heats) {
         System.out.println("||------------------------||");
@@ -83,6 +106,9 @@ public class GameUIImpl implements GameUI {
 
     }
 
+    /**
+     * отрисовка меню выиграша
+     */
     @Override
     public void printGameWin() {
         try {
@@ -95,6 +121,9 @@ public class GameUIImpl implements GameUI {
         printEmoji("happy_smiley");
     }
 
+    /**
+     * отрисовка меню проигрыша
+     */
     @Override
     public void printGameLost() {
         try {

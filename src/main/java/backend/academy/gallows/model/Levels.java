@@ -2,6 +2,9 @@ package backend.academy.gallows.model;
 
 import lombok.Getter;
 
+/**
+ * Enum для определения уровней сложности
+ */
 @Getter
 public enum Levels {
     EASY(9, 1),

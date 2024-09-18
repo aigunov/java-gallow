@@ -13,6 +13,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Главный класс для всего проекта в котором и происходит весь игровой процесс
+ * Этот класс вызывает функционал всех остальных и запускает игру
+ * начиная с метода session()
+ */
 @SuppressWarnings({"RegexpSinglelineJava", "MagicNumber"})
 @Getter
 @Setter
@@ -49,6 +54,7 @@ public class GameSession {
 
     /**
      * Основной метод игровой сессии
+     * тут происходит вся игра
      */
     public void session() {
         menuCircle();
@@ -122,7 +128,7 @@ public class GameSession {
 
     /**
      * Метод определяет отгадываемое слово
-     *
+     * и проверяет что подобранное слово - валидно
      * @param level    - какой уровень сложности хочет игрок
      * @param category - какую тему для слов выбрал игрок
      */
@@ -173,7 +179,7 @@ public class GameSession {
                 break;
             } else if (input == 2) {
                 ui.printEmoji(SAD_EMOJI);
-//                System.exit(0);
+                System.exit(0);
             } else {
                 System.out.println("Такого варианта ответа нет, пожалуйста введите подходящий");
             }

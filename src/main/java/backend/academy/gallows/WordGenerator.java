@@ -23,6 +23,12 @@ public class WordGenerator {
     private ObjectMapper mapper = new ObjectMapper();
     private Word word;
 
+    /**
+     * главная задача метода - вернуть word для отгадывания
+     * @param level - какой уровень сложности хочет игрок
+     * @param category - какую категорию выбрал игрок
+     * @return word
+     */
     public Word generateWord(Levels level, Categories category) {
         int num = new Random().nextInt(3);
         int wordNum = new Random().nextInt(5);
