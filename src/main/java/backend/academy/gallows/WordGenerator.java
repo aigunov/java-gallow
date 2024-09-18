@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Slf4j
-public class WordGenerator {
+public final class WordGenerator {
     private ObjectMapper mapper = new ObjectMapper();
     private Word word;
 

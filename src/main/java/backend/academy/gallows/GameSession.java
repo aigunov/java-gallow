@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Slf4j
-public class GameSession {
+public final class GameSession {
     //статические поля константы для того чтобы избежать "непонятных значений" в коде и сделать его более читаемым
     private static final String START_MENU = "game_menu_start";
     private static final String CATEGORIES_MENU = "game_menu_choose_category";

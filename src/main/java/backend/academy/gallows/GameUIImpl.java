@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings({ "RegexpSinglelineJava", "MultipleStringLiterals"})
 @Slf4j
-public class GameUIImpl implements GameUI {
+public final class GameUIImpl implements GameUI {
     private static final String NODE_OF_JSON_FILE = "game_menus";
     private final ObjectMapper mapper = new ObjectMapper();
     private final File file = new File("src/main/resources/ui.json");
