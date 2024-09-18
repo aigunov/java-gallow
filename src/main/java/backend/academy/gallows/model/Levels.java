@@ -13,7 +13,7 @@ public enum Levels {
     private final int hitpoint;
     private final int step;
 
-    private Levels(int hitpoint, int step) {
+    Levels(int hitpoint, int step) {
         this.hitpoint = hitpoint;
         this.step = step;
     }

@@ -7,15 +7,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * Класс для извлечения из dictionary.json нужного слова по переданнам конфигурациям
  * если конфигурации не заданы, то слово подбирается случайным образом
  */
+@SuppressWarnings({"RegexpSinglelineJava", "MagicNumber", "ParameterAssignment"})
+@Getter
+@Setter
 @Slf4j
 public class WordGenerator {
-    private final ObjectMapper mapper = new ObjectMapper();
+    private ObjectMapper mapper = new ObjectMapper();
     private Word word;
 
     public Word generateWord(Levels level, Categories category) {

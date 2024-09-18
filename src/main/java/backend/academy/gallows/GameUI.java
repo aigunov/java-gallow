@@ -3,17 +3,17 @@ package backend.academy.gallows;
 import java.util.List;
 
 public interface GameUI {
-    void printTony(final int step);
+    void printTony(int step);
 
-    void printWord(List<Character> letters, final String word);
+    void printWord(List<Character> letters, String word);
 
-    void printIntermediateResults(final int solved, final int heats);
+    void printIntermediateResults(int solved, int heats);
 
     void printGameWin();
 
     void printGameLost();
 
-    void printEmoji(final String emojiType);
+    void printEmoji(String emojiType);
 
-    void printMenu(final String menuType);
+    void printMenu(String menuType);
 }

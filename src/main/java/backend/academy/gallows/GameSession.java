@@ -3,13 +3,19 @@ package backend.academy.gallows;
 import backend.academy.gallows.model.Categories;
 import backend.academy.gallows.model.Levels;
 import backend.academy.gallows.model.Word;
+import backend.academy.gallows.model.WordFromDictionaryNotValid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+@SuppressWarnings({"RegexpSinglelineJava", "MagicNumber"})
+@Getter
+@Setter
 @Slf4j
 public class GameSession {
     //статические поля константы для того чтобы избежать "непонятных значений" в коде и сделать его более читаемым
@@ -23,12 +29,10 @@ public class GameSession {
     private static final String SAD_EMOJI = "goodbye_smiley";
     private static final String DEAD_EMOJI = "dead_smiley";
 
-    private final Scanner sc;
-    private final WordGenerator generator = new WordGenerator();
     private final GameUI ui = new GameUIImpl();
-
     private final String playerName;
-
+    private WordGenerator generator = new WordGenerator();
+    private Scanner sc;
     private Categories category;
     private Levels level;
     private Word word;
@@ -62,7 +66,7 @@ public class GameSession {
                 System.out.println("Если вы хотите воспользоваться посказкой введите \"1\":");
             }
             var letter = sc.next().toLowerCase();
-            log.info("user input: " + letter);
+            log.info("user input: {}", letter);
             if (!validateLetter(letter)) {
                 continue;
             }
@@ -71,11 +75,11 @@ public class GameSession {
             ui.printWord(characters, word.word());
             System.out.println();
         }
-        if(didWin){
-            System.out.println("ПОЗДРАВЛЯЕМ ВАС "+ playerName + " ВЫ ПОБЕДИЛИ!!!");
+        if (didWin) {
+            System.out.println("ПОЗДРАВЛЯЕМ ВАС " + playerName + " ВЫ ПОБЕДИЛИ!!!");
             System.out.println("\uD83C\uDF89\uD83C\uDF89\uD83C\uDF89\uD83C\uDF89\uD83C\uDF89");
             ui.printGameWin();
-        }else{
+        } else {
             ui.printEmoji(DEAD_EMOJI);
             System.out.println("К СОЖАЛЕНИЕ ВЫ " + playerName + " ПРОИГРАЛИ");
             System.out.println("\uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE2D\uD83D\uDE2D");
@@ -101,21 +105,19 @@ public class GameSession {
             } else {
                 System.out.println("Вы уже использовали подсказку");
             }
-            return false;
         } else {
             if (!Character.isLetter(letter.charAt(0))) {
                 System.out.println("Вы должны ввести именно букву");
-                return false;
             } else if (characters.contains(letter.charAt(0))) {
                 System.out.println("Вы уже вводили эту букву");
-                return false;
             } else if (letter.charAt(0) >= 'a' && letter.charAt(0) <= 'z') {
                 System.out.println("Вы можете вводить исключительно русские буквы");
-                return false;
+            } else {
+                log.info("the Letter is absolutely valid and correct");
+                return true;
             }
-            log.info("the Letter is absolutely valid and correct");
-            return true;
         }
+        return false;
     }
 
     /**
@@ -126,7 +128,13 @@ public class GameSession {
      */
     Word createWord(final Levels level, final Categories category) {
         // TODO добавить проверку на валидность слов
-        return generator.generateWord(level, category);
+        var generated = generator.generateWord(level, category);
+        if (generated.word().isBlank() || generated.word().isEmpty()
+            || !Pattern.matches("[а-яА-Я]+", generated.word())
+            || !generated.word().toLowerCase().equals(generated.word())) {
+            throw new WordFromDictionaryNotValid("кто-то умный добавил неправильные слова в словарь");
+        }
+        return generated;
     }
 
     /**
@@ -141,14 +149,14 @@ public class GameSession {
                 count++;
             }
             System.out.println("Вы угадали " + count + " симоволов");
-            log.info("Игрок отгадал " + count + " символов ✨");
-            hits+=count;
+            log.info("Игрок отгадал {} символов ✨", count);
+            hits += count;
             didWin = hits == word.word().length();
         } else {
             System.out.println("Увы и ах, вы ошиблись \uD83D\uDE2D");
             hitPoints--;
             step = (level.hitpoint() - hitPoints) * level.step();
-            log.info("Игрок ошибся, hitpoints: " + hitPoints + ", step: " + step);
+            log.info("Игрок ошибся, hitpoints: {}, step: {}", hitPoints, step);
         }
     }
 
@@ -156,29 +164,30 @@ public class GameSession {
      * Метод-цикл задающий и определяющий меню, и устанваливает настройки игры
      */
     void menuCircle() {
+        var wrongVariantInput = "Пожалуйста введите один из представленных вариантов";
         ui.printEmoji(HAPPY_EMOJI);
         while (true) {
             ui.printMenu(START_MENU);
-            int var = sc.nextInt();
-            if (var == 1) {
+            int input = sc.nextInt();
+            if (input == 1) {
                 break;
-            } else if (var == 2) {
+            } else if (input == 2) {
                 ui.printEmoji(SAD_EMOJI);
-                System.exit(0);
+//                System.exit(0);
             } else {
                 System.out.println("Такого варианта ответа нет, пожалуйста введите подходящий");
             }
         }
         while (true) {
             ui.printMenu(CATEGORIES_MENU);
-            int var = sc.nextInt();
-            category = switch (var) {
+            int input = sc.nextInt();
+            category = switch (input) {
                 case 1 -> Categories.FRUITS;
                 case 2 -> Categories.ANIMALS;
                 case 3 -> Categories.PROFESSIONS;
                 case 4 -> Categories.RANDOM;
                 default -> {
-                    System.out.println("Пожалуйста введите один из представленных вариантов");
+                    System.out.println(wrongVariantInput);
                     yield null;
                 }
             };
@@ -190,14 +199,14 @@ public class GameSession {
 
         while (true) {
             ui.printMenu(LEVELS_MENU);
-            int var = sc.nextInt();
-            level = switch (var) {
+            int input = sc.nextInt();
+            level = switch (input) {
                 case 1 -> Levels.EASY;
                 case 2 -> Levels.MIDDLE;
                 case 3 -> Levels.HARD;
                 case 4 -> Levels.RANDOM;
                 default -> {
-                    System.out.println("Пожалуйста введите один из представленных вариантов");
+                    System.out.println(wrongVariantInput);
                     yield null;
                 }
             };
