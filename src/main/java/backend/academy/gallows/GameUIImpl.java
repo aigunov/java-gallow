@@ -52,7 +52,6 @@ public class GameUIImpl implements GameUI {
      * какой конкретно из этап виселицы должен отрисоваться
      * определяется по формуле  (level.hitpoint() - hitPoints) * level.step()
      * для каждого уровня сложности определен свой step и hitpoint как кол-во жизней
-     * @param step
      */
     @Override
     public void printTony(final int step) {
