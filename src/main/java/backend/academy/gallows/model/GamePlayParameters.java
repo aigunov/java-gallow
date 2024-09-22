@@ -7,6 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Класс для хранения в себе параметров
+ * и настроек игры для передачи его от
+ * GameLogic -> GameSession -> GameInterface
+ * и в обратном направлении
+ * идея напрямую перекидывать в методах все аргументы -
+ * была отклонена
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

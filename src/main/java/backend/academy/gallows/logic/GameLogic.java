@@ -13,6 +13,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Singleton класс который ответственнен
+ * за всю игровую логику каждой сессии
+ * он валидирует введеные символы
+ * генерирует слова и проверяет
+ * отгадана ли буква из слова
+ */
 @SuppressWarnings({"RegexpSinglelineJava"})
 @Getter
 @Setter
@@ -38,6 +45,13 @@ public class GameLogic {
         return instance;
     }
 
+    /**
+     * в середине каждого раунда повторяется
+     * одна и та же логика по введению символа
+     * проверки его на валидность
+     * и проверки на совпадения
+     * по сути это и есть главный метод класса
+     */
     public GamePlayParameters roundMiddle() {
         System.out.println("Введите символ. ");
         if (!word.didUseHintAlready()) {

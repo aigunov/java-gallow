@@ -6,6 +6,11 @@ import backend.academy.gallows.model.Levels;
 import java.util.Scanner;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Singleton класс ответсвенный за все
+ * взаимодействие с пользователем
+ * он вызывает нужные методы класса GameUIImpl
+ */
 @SuppressWarnings({"RegexpSinglelineJava", "MagicNumber"})
 @Slf4j
 public class GameInterface {
@@ -100,6 +105,10 @@ public class GameInterface {
 
     }
 
+    /**
+     * Метод для вывода в консоль первого этапа
+     * который повторяется в каждом раунде
+     */
     public void roundBeginning(final GamePlayParameters parameters) {
         System.out.println("ИГРА НАЧАЛАСЬ\n");
         ui.printTony(parameters.step() + 1);
@@ -108,17 +117,27 @@ public class GameInterface {
 
     }
 
+    /**
+     * Метод для вывод в консоль последнего этапа
+     * который повторяется в конце каждого раунда
+     */
     public void roundEnding(final GamePlayParameters parameters) {
         ui.printWord(parameters.characters(), parameters.word().word());
         System.out.println();
     }
 
+    /**
+     * Отрисовка меню Победы
+     */
     public void winMenu(final String playerName) {
         System.out.println("ПОЗДРАВЛЯЕМ ВАС " + playerName + " ВЫ ПОБЕДИЛИ!!!");
         System.out.println("\uD83C\uDF89\uD83C\uDF89\uD83C\uDF89\uD83C\uDF89\uD83C\uDF89");
         ui.printMenu(WIN_MENU);
     }
 
+    /**
+     * Отрисовка меню поражения
+     */
     public void loseMenu(final String playerName) {
         ui.printEmoji(DEAD_EMOJI);
         System.out.println("К СОЖАЛЕНИЕ ВЫ " + playerName + " ПРОИГРАЛИ");

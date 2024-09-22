@@ -9,6 +9,11 @@ import java.util.Arrays;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Singleton класс для вывода всех
+ * ui элементо хранящихся в виде строки
+ * в файле ui.json
+ */
 @SuppressWarnings({"RegexpSinglelineJava"})
 @Slf4j
 public final class GameUIImpl implements GameUI {
