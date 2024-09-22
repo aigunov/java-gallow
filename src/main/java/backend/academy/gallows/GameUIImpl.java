@@ -1,5 +1,6 @@
 package backend.academy.gallows;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -8,13 +9,41 @@ import java.util.Arrays;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
-@SuppressWarnings({ "RegexpSinglelineJava", "MultipleStringLiterals"})
+@SuppressWarnings({ "RegexpSinglelineJava"})
 @Slf4j
 public final class GameUIImpl implements GameUI {
     private static final String NODE_OF_JSON_FILE = "game_menus";
     private final ObjectMapper mapper = new ObjectMapper();
-    private final File file = new File("src/main/resources/ui.json");
-    private JsonNode jsonNode;
+    private final JsonNode rootNode;
+    private static GameUI instance;
+
+    private GameUIImpl() throws IOException {
+        var file = new File("src/main/resources/ui.json");
+        rootNode = mapper.readTree(file);
+    }
+
+    public static GameUI getInstance() {
+        if (instance == null) {
+            try {
+                return new GameUIImpl();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return instance;
+    }
+
+    private void printFromNode(final JsonNode node) {
+        try {
+            Arrays.stream(mapper.treeToValue(node, String[].class))
+                .forEach(System.out::println);
+        } catch (JsonProcessingException e) {
+            // Обработка исключения: выбросить, если нужно
+            log.error("Возникла ошибка при чтениие json файла: {}", e.getMessage());
+            System.err.println("Не удалось загрузить меню. Пожалуйста, перезапустите приложение.");
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Метод для отрисовки любого из меню
@@ -24,27 +53,16 @@ public final class GameUIImpl implements GameUI {
      *                 между ними отличие будет в одну строчку
      */
     public void printMenu(final String menuType) {
-        try {
-            jsonNode = mapper.readTree(file).get(NODE_OF_JSON_FILE).get(menuType);
-            Arrays.stream(mapper.treeToValue(jsonNode, String[].class))
-                .forEach(System.out::println);
-        } catch (IOException e) {
-            var mes = e.getMessage();
-            log.error(mes);
-        }
+        JsonNode menuNode = rootNode.get(NODE_OF_JSON_FILE).get(menuType);
+        printFromNode(menuNode); // Используйте printFromNode
     }
 
     /**
      * точно такой же как printMenu но для эмодзи
      */
     public void printEmoji(final String emoji) {
-        try {
-            jsonNode = mapper.readTree(file).get(emoji);
-            Arrays.stream(mapper.treeToValue(jsonNode, String[].class))
-                .forEach(System.out::println);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
+        JsonNode emojiNode = rootNode.get(emoji);
+        printFromNode(emojiNode);
     }
 
     /**
@@ -55,21 +73,39 @@ public final class GameUIImpl implements GameUI {
      */
     @Override
     public void printTony(final int step) {
-        try {
-            jsonNode = mapper.readTree(file).get("hangman_stages").get(String.valueOf(step));
-            Arrays.stream(mapper.treeToValue(jsonNode, String[].class))
-                .forEach(System.out::println);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
+        JsonNode tonyNode = rootNode.get("hangman_stages").get(String.valueOf(step));
+        printFromNode(tonyNode);
     }
+
+
+
+    /**
+     * отрисовка меню выиграша
+     */
+    @Override
+    public void printGameWin() {
+        var gameWinNode = rootNode.get("game_menu_win");
+        printFromNode(gameWinNode);
+        printEmoji("happy_smiley");
+    }
+
+    /**
+     * отрисовка меню проигрыша
+     */
+    @Override
+    public void printGameLost() {
+        var gameLostNode = rootNode.get("game_menu_lost");
+        printFromNode(gameLostNode);
+        printEmoji("goodbye_smiley");
+    }
+
 
     /**
      * метод для отрисовки слова красивым образом
      */
     @Override
     public void printWord(final List<Character> letters, final String word) {
-        StringBuilder output = new StringBuilder(); // Используем StringBuilder для построения строки результата
+        StringBuilder output = new StringBuilder();
 
         for (int i = 0; i < word.length(); i++) {
             char currentChar = word.charAt(i);
@@ -98,40 +134,12 @@ public final class GameUIImpl implements GameUI {
      */
     @Override
     public void printIntermediateResults(final int solved, final int heats) {
-        System.out.println("||------------------------||");
-        System.out.println("||  Решено:         " + solved + " ||");
-        System.out.println("||  Осталось хп:    " + heats + " ||");
-        System.out.println("||------------------------||");
+        System.out.printf("""
+            ||------------------------||
+            ||  Решено:         {} ||
+            ||  Осталось хп:    {} ||
+            ||------------------------||
+            %n""", solved, heats);
 
-    }
-
-    /**
-     * отрисовка меню выиграша
-     */
-    @Override
-    public void printGameWin() {
-        try {
-            jsonNode = mapper.readTree(file).get(NODE_OF_JSON_FILE).get("game_menu_win");
-            Arrays.stream(mapper.treeToValue(jsonNode, String[].class))
-                .forEach(System.out::println);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-        printEmoji("happy_smiley");
-    }
-
-    /**
-     * отрисовка меню проигрыша
-     */
-    @Override
-    public void printGameLost() {
-        try {
-            jsonNode = mapper.readTree(file).get(NODE_OF_JSON_FILE).get("game_menu_loose");
-            Arrays.stream(mapper.treeToValue(jsonNode, String[].class))
-                .forEach(System.out::println);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-        printEmoji("goodbye_smiley");
     }
 }

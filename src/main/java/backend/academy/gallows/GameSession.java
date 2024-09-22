@@ -34,7 +34,7 @@ public final class GameSession {
     private static final String SAD_EMOJI = "goodbye_smiley";
     private static final String DEAD_EMOJI = "dead_smiley";
 
-    private final GameUI ui = new GameUIImpl();
+    private final GameUI ui = GameUIImpl.getInstance();
     private final String playerName;
     private WordGenerator generator = new WordGenerator();
     private Scanner sc;
@@ -198,7 +198,7 @@ public final class GameSession {
                 }
             };
             if (category != null) {
-                System.out.println("Отличный выбор сэр " + playerName);
+                System.out.println("Отличный выбор " + playerName);
                 break;
             }
         }
@@ -217,7 +217,7 @@ public final class GameSession {
                 }
             };
             if (level != null) {
-                System.out.println("Вы запроста справитесь сэр " + playerName);
+                System.out.println("Вы запроста справитесь " + playerName);
                 break;
             }
         }

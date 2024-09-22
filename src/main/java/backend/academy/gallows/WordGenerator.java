@@ -30,8 +30,9 @@ public final class WordGenerator {
      * @return word
      */
     public Word generateWord(Levels level, Categories category) {
-        int num = new Random().nextInt(3);
-        int wordNum = new Random().nextInt(5);
+        var random = new Random();
+        int num = random.nextInt(3);
+        int wordNum = random.nextInt(5);
         level = level == null ? Levels.values()[num] : level;
         category = category == null ? Categories.values()[num] : category;
 
