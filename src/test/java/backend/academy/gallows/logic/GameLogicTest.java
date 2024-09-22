@@ -1,15 +1,14 @@
-package backend.academy.gallows;
+package backend.academy.gallows.logic;
 
 import backend.academy.gallows.model.Categories;
+import backend.academy.gallows.model.GamePlayParameters;
 import backend.academy.gallows.model.Levels;
 import backend.academy.gallows.model.Word;
 import backend.academy.gallows.model.WordFromDictionaryNotValid;
-import java.util.Scanner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,22 +19,22 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class GameSessionTest {
-    private GameSession gameSession;
-    private WordGenerator generator;
+class GameLogicTest {
     private Word word;
+    private WordGenerator generator;
+    private GameLogic gameLogic;
 
     @BeforeEach
     void setUp() {
         word = mock(Word.class);
         generator = mock(WordGenerator.class);
-        gameSession = new GameSession("bruh");
-        gameSession.word(word);
+        gameLogic = GameLogic.getInstance();
+        gameLogic.word(word);
     }
 
     @Test
     void testValidateLetter_WhenInputIsMoreThanOneCharacter() {
-        assertFalse(gameSession.validateLetter("ab"));
+        assertFalse(gameLogic.validateLetter("ab"));
     }
 
     @Test
@@ -43,7 +42,7 @@ class GameSessionTest {
         when(word.didUseHintAlready()).thenReturn(false);
         when(word.hint()).thenReturn("Hint Example");
 
-        boolean result = gameSession.validateLetter("1");
+        boolean result = gameLogic.validateLetter("1");
 
         assertFalse(result);
         verify(word, times(1)).hint();
@@ -54,7 +53,7 @@ class GameSessionTest {
     void testValidateLetter_WhenInputIsOneCharacterAndHintAlreadyUsed() {
         when(word.didUseHintAlready()).thenReturn(true);
 
-        boolean result = gameSession.validateLetter("1");
+        boolean result = gameLogic.validateLetter("1");
 
         assertFalse(result);
         verify(word, never()).hint();
@@ -63,29 +62,29 @@ class GameSessionTest {
 
     @Test
     void testValidateLetter_WhenInputIsNotALetter() {
-        boolean result = gameSession.validateLetter("1$");
+        boolean result = gameLogic.validateLetter("1$");
 
         assertFalse(result);
     }
 
     @Test
     void testValidateLetter_WhenLetterAlreadyUsed() {
-        gameSession.characters().add('а');
-        boolean result = gameSession.validateLetter("а");
+        gameLogic.characters().add('н');
+        boolean result = gameLogic.validateLetter("н");
 
         assertFalse(result);
     }
 
     @Test
     void testValidateLetter_WhenInputIsLowerCaseLatinLetter() {
-        boolean result = gameSession.validateLetter("a");
+        boolean result = gameLogic.validateLetter("a");
 
         assertFalse(result);
     }
 
     @Test
     void testValidateLetter_WhenInputIsValidRussianLetter() {
-        boolean result = gameSession.validateLetter("а");
+        boolean result = gameLogic.validateLetter("а");
 
         assertTrue(result);
     }
@@ -93,60 +92,85 @@ class GameSessionTest {
     @Test
     void testCreateWord_EmptyWord() {
         Word mockWord = mock(Word.class);
-        gameSession.generator(generator);
+        gameLogic.generator(generator);
+        var params = GamePlayParameters.builder()
+            .level(Levels.EASY)
+            .category(Categories.FRUITS)
+            .build();
+
         when(mockWord.word()).thenReturn("");
         when(generator.generateWord(any(Levels.class), any(Categories.class))).thenReturn(mockWord);
 
         assertThrows(WordFromDictionaryNotValid.class, () -> {
-            gameSession.createWord(Levels.EASY, Categories.FRUITS);
+            gameLogic.createWord(params);
         });
     }
 
     @Test
     void testCreateWord_BlankWord() {
         Word mockWord = mock(Word.class);
-        gameSession.generator(generator);
+        gameLogic.generator(generator);
+        var params = GamePlayParameters.builder()
+            .level(Levels.EASY)
+            .category(Categories.FRUITS)
+            .build();
+
         when(mockWord.word()).thenReturn("   ");
         when(generator.generateWord(any(Levels.class), any(Categories.class))).thenReturn(mockWord);
 
         assertThrows(WordFromDictionaryNotValid.class, () -> {
-            gameSession.createWord(Levels.EASY, Categories.FRUITS);
+            gameLogic.createWord(params);
         });
     }
 
     @Test
     void testCreateWord_InvalidCharacters() {
         Word mockWord = mock(Word.class);
-        gameSession.generator(generator);
+        gameLogic.generator(generator);
+        var params = GamePlayParameters.builder()
+            .level(Levels.EASY)
+            .category(Categories.FRUITS)
+            .build();
+
         when(mockWord.word()).thenReturn("Слово123");
         when(generator.generateWord(any(Levels.class), any(Categories.class))).thenReturn(mockWord);
 
         assertThrows(WordFromDictionaryNotValid.class, () -> {
-            gameSession.createWord(Levels.EASY, Categories.FRUITS);
+            gameLogic.createWord(params);
         });
     }
 
     @Test
     void testCreateWord_UpperCaseLetter() {
         Word mockWord = mock(Word.class);
-        gameSession.generator(generator);
+        gameLogic.generator(generator);
+        var params = GamePlayParameters.builder()
+            .level(Levels.EASY)
+            .category(Categories.FRUITS)
+            .build();
+
         when(generator.generateWord(any(Levels.class), any(Categories.class))).thenReturn(mockWord);
         when(mockWord.word()).thenReturn("СЛОВО");
 
         assertThrows(WordFromDictionaryNotValid.class, () -> {
-            gameSession.createWord(Levels.EASY, Categories.FRUITS);
+            gameLogic.createWord(params);
         });
     }
 
     @Test
     void testCreateWord_ValidWord() {
         Word mockWord = mock(Word.class);
-        gameSession.generator(generator);
+        gameLogic.generator(generator);
+        var params = GamePlayParameters.builder()
+            .level(Levels.EASY)
+            .category(Categories.FRUITS)
+            .build();
+
         when(mockWord.word()).thenReturn("слово");
         when(generator.generateWord(any(Levels.class), any(Categories.class))).thenReturn(mockWord);
 
-        Word result = gameSession.createWord(Levels.EASY, Categories.FRUITS);
+        var result = gameLogic.createWord(params);
 
-        assertEquals(mockWord, result);
+        assertEquals(mockWord, result.word());
     }
 }

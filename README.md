@@ -135,3 +135,11 @@ mvn help:describe -Dplugin=compiler
   https://docs.oracle.com/en/java/javase/22/docs/api/index.html
 
 [course-url]: https://edu.tinkoff.ru/all-activities/courses/870efa9d-7067-4713-97ae-7db256b73eab
+
+
+
+# Описание проекта
+
+## Архитектура
+![img.png](architecture.png) 
+

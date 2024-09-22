@@ -1,4 +1,4 @@
-package backend.academy.gallows;
+package backend.academy.gallows.ui;
 
 import java.util.List;
 
@@ -14,10 +14,6 @@ public interface GameUI {
     void printWord(List<Character> letters, String word);
 
     void printIntermediateResults(int solved, int heats);
-
-    void printGameWin();
-
-    void printGameLost();
 
     void printEmoji(String emojiType);
 

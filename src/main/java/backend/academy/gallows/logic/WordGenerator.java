@@ -1,4 +1,4 @@
-package backend.academy.gallows;
+package backend.academy.gallows.logic;
 
 import backend.academy.gallows.model.Categories;
 import backend.academy.gallows.model.Levels;
@@ -20,6 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @Slf4j
 public final class WordGenerator {
+    private final static Integer NUMBER_FOR_CONFIGS = 3;
+    private final static Integer NUMBER_FOR_WORDS = 5;
+
     private ObjectMapper mapper = new ObjectMapper();
     private Word word;
 
@@ -31,8 +34,8 @@ public final class WordGenerator {
      */
     public Word generateWord(Levels level, Categories category) {
         var random = new Random();
-        int num = random.nextInt(3);
-        int wordNum = random.nextInt(5);
+        int num = random.nextInt(NUMBER_FOR_CONFIGS);
+        int wordNum = random.nextInt(NUMBER_FOR_WORDS);
         level = (level == null || level == Levels.RANDOM) ? Levels.values()[num] : level;
         category = (category == null || category == Categories.RANDOM) ? Categories.values()[num] : category;
 

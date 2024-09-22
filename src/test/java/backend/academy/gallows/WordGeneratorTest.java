@@ -1,5 +1,6 @@
 package backend.academy.gallows;
 
+import backend.academy.gallows.logic.WordGenerator;
 import backend.academy.gallows.model.Categories;
 import backend.academy.gallows.model.Levels;
 import backend.academy.gallows.model.Word;

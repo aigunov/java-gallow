@@ -1,4 +1,4 @@
-package backend.academy.gallows;
+package backend.academy.gallows.ui;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -38,7 +38,6 @@ public final class GameUIImpl implements GameUI {
             Arrays.stream(mapper.treeToValue(node, String[].class))
                 .forEach(System.out::println);
         } catch (JsonProcessingException e) {
-            // Обработка исключения: выбросить, если нужно
             log.error("Возникла ошибка при чтениие json файла: {}", e.getMessage());
             System.err.println("Не удалось загрузить меню. Пожалуйста, перезапустите приложение.");
             throw new RuntimeException(e);
@@ -76,29 +75,6 @@ public final class GameUIImpl implements GameUI {
         JsonNode tonyNode = rootNode.get("hangman_stages").get(String.valueOf(step));
         printFromNode(tonyNode);
     }
-
-
-
-    /**
-     * отрисовка меню выиграша
-     */
-    @Override
-    public void printGameWin() {
-        var gameWinNode = rootNode.get("game_menu_win");
-        printFromNode(gameWinNode);
-        printEmoji("happy_smiley");
-    }
-
-    /**
-     * отрисовка меню проигрыша
-     */
-    @Override
-    public void printGameLost() {
-        var gameLostNode = rootNode.get("game_menu_lost");
-        printFromNode(gameLostNode);
-        printEmoji("goodbye_smiley");
-    }
-
 
     /**
      * метод для отрисовки слова красивым образом
@@ -139,7 +115,7 @@ public final class GameUIImpl implements GameUI {
             ||  Решено:         {} ||
             ||  Осталось хп:    {} ||
             ||------------------------||
-            %n""", solved, heats);
+            \n""", solved, heats);
 
     }
 }
