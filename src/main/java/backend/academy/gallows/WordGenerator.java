@@ -33,8 +33,8 @@ public final class WordGenerator {
         var random = new Random();
         int num = random.nextInt(3);
         int wordNum = random.nextInt(5);
-        level = level == null ? Levels.values()[num] : level;
-        category = category == null ? Categories.values()[num] : category;
+        level = (level == null || level == Levels.RANDOM) ? Levels.values()[num] : level;
+        category = (category == null || category == Categories.RANDOM) ? Categories.values()[num] : category;
 
         var file = new File("src/main/resources/dictionary.json");
         try {

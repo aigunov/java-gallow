@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
-@SuppressWarnings({ "RegexpSinglelineJava"})
+@SuppressWarnings({"RegexpSinglelineJava"})
 @Slf4j
 public final class GameUIImpl implements GameUI {
     private static final String NODE_OF_JSON_FILE = "game_menus";
