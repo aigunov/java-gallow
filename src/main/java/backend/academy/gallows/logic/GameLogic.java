@@ -145,7 +145,7 @@ public class GameLogic {
             throw new WordFromDictionaryNotValid("кто-то умный добавил неправильные слова в словарь");
         }
         word = generated;
-        mistakes = parameters.level().hitpoint();
+        mistakes = word.levels().hitpoint();
         log.info("Params: {}", params);
         params = GamePlayParameters.builder()
             .word(word)
