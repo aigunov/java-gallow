@@ -23,17 +23,13 @@ public final class GameUIImpl implements GameUI {
     private static GameUI instance;
 
     private GameUIImpl() throws IOException {
-        var file = new File("src/main/resources/ui.json");
+        var file = new File("target/classes/ui.json");
         rootNode = mapper.readTree(file);
     }
 
-    public static GameUI getInstance() {
+    public static GameUI getInstance() throws IOException {
         if (instance == null) {
-            try {
                 return new GameUIImpl();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
         return instance;
     }
@@ -86,6 +82,7 @@ public final class GameUIImpl implements GameUI {
      */
     @Override
     public void printWord(final List<Character> letters, final String word) {
+        System.out.println();
         StringBuilder output = new StringBuilder();
 
         for (int i = 0; i < word.length(); i++) {
@@ -116,11 +113,13 @@ public final class GameUIImpl implements GameUI {
     @Override
     public void printIntermediateResults(final int solved, final int heats) {
         System.out.printf("""
+            \n
             ||------------------------||
-            ||  Решено:         {} ||
-            ||  Осталось хп:    {} ||
+            || Решено:         %d ||
+            || Осталось хп:    %d ||
             ||------------------------||
-            \n""", solved, heats);
+            \n
+            """, solved, heats);
 
     }
 }

@@ -3,6 +3,7 @@ package backend.academy.gallows;
 import backend.academy.gallows.logic.GameLogic;
 import backend.academy.gallows.model.GameResults;
 import backend.academy.gallows.ui.GameInterface;
+import java.io.IOException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,13 @@ public final class GameSession {
      */
     public void session() {
         GameResults result = GameResults.IN_PROGRESS;
-        gameInterface = GameInterface.getInstance();
+        try {
+            gameInterface = GameInterface.getInstance();
+        } catch (IOException e) {
+            log.error("Возникла ошибка при чтениие json файла: {}", e.getMessage());
+            System.err.println("Не удалось загрузить меню. Пожалуйста, перезапустите приложение.");
+            throw new RuntimeException(e);
+        }
         gameLogic = GameLogic.getInstance();
 
         var params = gameLogic.createWord(gameInterface.menuCircle(playerName));
@@ -41,7 +48,11 @@ public final class GameSession {
         while (result == GameResults.IN_PROGRESS) {
             gameInterface.roundBeginning(params);
             var middleRoundParams = gameLogic.roundMiddle();
-            params.characters(middleRoundParams.characters()).step(middleRoundParams.step());
+            params
+                .characters(middleRoundParams.characters())
+                .step(middleRoundParams.step())
+                .hits(middleRoundParams.hits())
+                .solved(middleRoundParams.solved());
             gameInterface.roundEnding(params);
             result = gameLogic.checkResult();
         }

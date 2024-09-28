@@ -27,4 +27,7 @@ public class GamePlayParameters {
     private List<Character> characters;
 
     int step = 0;
+
+    private int solved;
+    private int hits;
 }

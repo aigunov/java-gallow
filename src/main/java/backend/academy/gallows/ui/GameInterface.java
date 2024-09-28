@@ -3,6 +3,7 @@ package backend.academy.gallows.ui;
 import backend.academy.gallows.model.Categories;
 import backend.academy.gallows.model.GamePlayParameters;
 import backend.academy.gallows.model.Levels;
+import java.io.IOException;
 import java.util.Scanner;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,10 +29,10 @@ public class GameInterface {
 
     private static GameInterface instance;
 
-    private GameInterface() {
+    private GameInterface() throws IOException {
     }
 
-    public static GameInterface getInstance() {
+    public static GameInterface getInstance() throws IOException {
         if (instance == null) {
             instance = new GameInterface();
         }
@@ -123,6 +124,7 @@ public class GameInterface {
      */
     public void roundEnding(final GamePlayParameters parameters) {
         ui.printWord(parameters.characters(), parameters.word().word());
+        ui.printIntermediateResults(parameters.solved(), parameters.hits());
         System.out.println();
     }
 

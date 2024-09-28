@@ -167,6 +167,8 @@ class GameLogicTest {
             .build();
 
         when(mockWord.word()).thenReturn("слово");
+        when(mockWord.levels()).thenReturn(Levels.EASY);
+        when(mockWord.category()).thenReturn(Categories.FRUITS);
         when(generator.generateWord(any(Levels.class), any(Categories.class))).thenReturn(mockWord);
 
         var result = gameLogic.createWord(params);

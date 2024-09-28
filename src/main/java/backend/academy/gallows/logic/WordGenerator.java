@@ -39,7 +39,7 @@ public final class WordGenerator {
         level = (level == null || level == Levels.RANDOM) ? Levels.values()[num] : level;
         category = (category == null || category == Categories.RANDOM) ? Categories.values()[num] : category;
 
-        var file = new File("src/main/resources/dictionary.json");
+        var file = new File("target/classes/dictionary.json");
         try {
             var jsonNode = mapper.readTree(file);
             jsonNode = jsonNode.get(category.name().toLowerCase()).get(level.name().toLowerCase()).get(wordNum);

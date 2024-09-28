@@ -79,12 +79,7 @@ public class GameLogic {
         }
 
         if (letter.charAt(0) == '1') {
-            if (!word.didUseHintAlready()) {
-                System.out.println("Подсказка: " + word.hint() + "\n");
-                word.didUseHintAlready(true);
-            } else {
-                System.out.println("Вы уже использовали подсказку");
-            }
+            handleHint(letter); // Вызов нового метода для обработки подсказки
         } else {
             char charLetter = letter.charAt(0);
             if (!Character.isLetter(charLetter)) {
@@ -121,6 +116,7 @@ public class GameLogic {
             gallowsStage = (word().levels().hitpoint() - mistakes) * word().levels().step();
             log.info("Игрок ошибся, mistakes: {}, gallowsStage: {}", mistakes, gallowsStage);
         }
+        params.solved(guessed).hits(mistakes);
     }
 
     public GameResults checkResult() {
@@ -154,5 +150,14 @@ public class GameLogic {
             .characters(List.of())
             .build();
         return params;
+    }
+
+    private void handleHint(final String letter) {
+        if (!word.didUseHintAlready()) {
+            System.out.println("Подсказка: " + word.hint() + "\n");
+            word.didUseHintAlready(true);
+        } else {
+            System.out.println("Вы уже использовали подсказку");
+        }
     }
 }
