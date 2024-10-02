@@ -1,6 +1,7 @@
 package backend.academy.gallows;
 
 import backend.academy.gallows.logic.GameLogic;
+import backend.academy.gallows.model.GamePlayParameters;
 import backend.academy.gallows.model.GameResults;
 import backend.academy.gallows.ui.GameInterface;
 import java.io.IOException;
@@ -43,7 +44,13 @@ public final class GameSession {
         }
         gameLogic = GameLogic.getInstance();
 
-        var params = gameLogic.createWord(gameInterface.menuCircle(playerName));
+        GamePlayParameters params = null;
+        try {
+            params = gameLogic.createWord(gameInterface.menuCircle(playerName));
+        } catch (IOException e) {
+            log.error("Ошибка при чтении файла: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
 
         while (result == GameResults.IN_PROGRESS) {
             gameInterface.roundBeginning(params);

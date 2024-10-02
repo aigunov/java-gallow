@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +25,17 @@ public final class GameUIImpl implements GameUI {
     private static GameUI instance;
 
     private GameUIImpl() throws IOException {
-        var file = new File("target/classes/ui.json");
-        rootNode = mapper.readTree(file);
+        InputStream inputStream = GameUIImpl.class.getResourceAsStream("/ui.json");
+        if (inputStream == null) {
+            throw new FileNotFoundException("Файл ui.json не найден.");
+        }
+        rootNode = mapper.readTree(inputStream);
+        inputStream.close();
     }
 
     public static GameUI getInstance() throws IOException {
         if (instance == null) {
-                return new GameUIImpl();
+                instance = new GameUIImpl();
         }
         return instance;
     }

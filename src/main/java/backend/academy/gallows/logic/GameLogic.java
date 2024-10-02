@@ -4,7 +4,10 @@ import backend.academy.gallows.model.GamePlayParameters;
 import backend.academy.gallows.model.GameResults;
 import backend.academy.gallows.model.Word;
 import backend.academy.gallows.model.WordFromDictionaryNotValid;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -77,9 +80,8 @@ public class GameLogic {
             System.out.println("Вы должны ввести только один символ а не строку");
             return false;
         }
-
         if (letter.charAt(0) == '1') {
-            handleHint(letter); // Вызов нового метода для обработки подсказки
+            handleHint(); // Вызов нового метода для обработки подсказки
         } else {
             char charLetter = letter.charAt(0);
             if (!Character.isLetter(charLetter)) {
@@ -132,8 +134,7 @@ public class GameLogic {
      * Метод определяет отгадываемое слово
      * и проверяет что подобранное слово - валидно
      */
-    public GamePlayParameters createWord(final GamePlayParameters parameters) {
-        // TODO добавить проверку на валидность слов
+    public GamePlayParameters createWord(final GamePlayParameters parameters) throws IOException {
         var generated = generator.generateWord(parameters.level(), parameters.category());
         if (generated.word().isBlank() || generated.word().isEmpty()
             || !Pattern.matches("[а-яА-Я]+", generated.word())
@@ -152,7 +153,11 @@ public class GameLogic {
         return params;
     }
 
-    private void handleHint(final String letter) {
+    /**
+     * Проверка может ли пользователь
+     * использовать подсказку или он ее уже использовал
+     */
+    private void handleHint() {
         if (!word.didUseHintAlready()) {
             System.out.println("Подсказка: " + word.hint() + "\n");
             word.didUseHintAlready(true);

@@ -5,6 +5,7 @@ import backend.academy.gallows.model.GamePlayParameters;
 import backend.academy.gallows.model.Levels;
 import backend.academy.gallows.model.Word;
 import backend.academy.gallows.model.WordFromDictionaryNotValid;
+import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -90,7 +91,7 @@ class GameLogicTest {
     }
 
     @Test
-    void testCreateWord_EmptyWord() {
+    void testCreateWord_EmptyWord() throws IOException {
         Word mockWord = mock(Word.class);
         gameLogic.generator(generator);
         var params = GamePlayParameters.builder()
@@ -107,7 +108,7 @@ class GameLogicTest {
     }
 
     @Test
-    void testCreateWord_BlankWord() {
+    void testCreateWord_BlankWord() throws IOException {
         Word mockWord = mock(Word.class);
         gameLogic.generator(generator);
         var params = GamePlayParameters.builder()
@@ -124,7 +125,7 @@ class GameLogicTest {
     }
 
     @Test
-    void testCreateWord_InvalidCharacters() {
+    void testCreateWord_InvalidCharacters() throws IOException {
         Word mockWord = mock(Word.class);
         gameLogic.generator(generator);
         var params = GamePlayParameters.builder()
@@ -141,7 +142,7 @@ class GameLogicTest {
     }
 
     @Test
-    void testCreateWord_UpperCaseLetter() {
+    void testCreateWord_UpperCaseLetter() throws IOException {
         Word mockWord = mock(Word.class);
         gameLogic.generator(generator);
         var params = GamePlayParameters.builder()
@@ -158,7 +159,7 @@ class GameLogicTest {
     }
 
     @Test
-    void testCreateWord_ValidWord() {
+    void testCreateWord_ValidWord() throws IOException {
         Word mockWord = mock(Word.class);
         gameLogic.generator(generator);
         var params = GamePlayParameters.builder()

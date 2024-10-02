@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -35,7 +36,7 @@ class WordGeneratorTest {
 
     @Test
     void testGenerateWord_ValidParameters() throws Exception {
-        when(mapper.readTree(any(File.class))).thenReturn(jsonNodeMock);
+        when(mapper.readTree(any(InputStream.class))).thenReturn(jsonNodeMock);
         when(jsonNodeMock.get(any(String.class))).thenReturn(jsonNodeMock);
         when(jsonNodeMock.get(any(String.class))).thenReturn(jsonNodeMock);
         when(jsonNodeMock.get(anyInt())).thenReturn(jsonNodeMock);
@@ -52,7 +53,7 @@ class WordGeneratorTest {
 
     @Test
     void testGenerateWord_WhenCategoryOrLevelIsNull() throws Exception {
-        when(mapper.readTree(any(File.class))).thenReturn(jsonNodeMock);
+        when(mapper.readTree(any(InputStream.class))).thenReturn(jsonNodeMock);
         when(jsonNodeMock.get(any(String.class))).thenReturn(jsonNodeMock);
         when(jsonNodeMock.get(any(String.class))).thenReturn(jsonNodeMock);
         when(jsonNodeMock.get(anyInt())).thenReturn(jsonNodeMock);
@@ -68,7 +69,7 @@ class WordGeneratorTest {
 
     @Test
     void testGenerateWord_WhenIOExceptionThrown() throws Exception {
-        when(mapper.readTree(any(File.class))).thenThrow(new IOException("File not found"));
+        when(mapper.readTree(any(InputStream.class))).thenThrow(new IOException("File not found"));
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             wordGenerator.generateWord(Levels.EASY, Categories.FRUITS);
@@ -81,7 +82,7 @@ class WordGeneratorTest {
     void testGenerateWord_ValidParametersRandomized() throws Exception {
         for (Levels level : Levels.values()) {
             for (Categories category : Categories.values()) {
-                when(mapper.readTree(any(File.class))).thenReturn(jsonNodeMock);
+                when(mapper.readTree(any(InputStream.class))).thenReturn(jsonNodeMock);
                 when(jsonNodeMock.get(any(String.class))).thenReturn(jsonNodeMock);
                 when(jsonNodeMock.get(any(String.class))).thenReturn(jsonNodeMock);
                 when(jsonNodeMock.get(anyInt())).thenReturn(jsonNodeMock);

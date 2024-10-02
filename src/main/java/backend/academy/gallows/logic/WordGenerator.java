@@ -5,7 +5,9 @@ import backend.academy.gallows.model.Levels;
 import backend.academy.gallows.model.Word;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,16 +34,19 @@ public final class WordGenerator {
      * @param category - какую категорию выбрал игрок
      * @return word
      */
-    public Word generateWord(Levels level, Categories category) {
+    public Word generateWord(Levels level, Categories category) throws IOException {
         var random = new Random();
         int num = random.nextInt(NUMBER_FOR_CONFIGS);
         int wordNum = random.nextInt(NUMBER_FOR_WORDS);
         level = (level == null || level == Levels.RANDOM) ? Levels.values()[num] : level;
         category = (category == null || category == Categories.RANDOM) ? Categories.values()[num] : category;
 
-        var file = new File("target/classes/dictionary.json");
+        var inputStream = WordGenerator.class.getResourceAsStream("/dictionary.json");
+        if(inputStream==null){
+            throw new FileNotFoundException("Файл dictionary.json не найден");
+        }
         try {
-            var jsonNode = mapper.readTree(file);
+            var jsonNode = mapper.readTree(inputStream);
             jsonNode = jsonNode.get(category.name().toLowerCase()).get(level.name().toLowerCase()).get(wordNum);
             word = mapper.treeToValue(jsonNode, Word.class);
             word.levels(level);
@@ -49,7 +54,7 @@ public final class WordGenerator {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        inputStream.close();
         log.info("Generated word: {}", word);
         return word;
     }
