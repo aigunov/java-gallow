@@ -40,20 +40,20 @@ public final class WordGenerator {
         level = (level == null || level == Levels.RANDOM) ? Levels.values()[num] : level;
         category = (category == null || category == Categories.RANDOM) ? Categories.values()[num] : category;
 
-        var inputStream = WordGenerator.class.getResourceAsStream("/dictionary.json");
-        if (inputStream == null) {
-            throw new FileNotFoundException("Файл dictionary.json не найден");
+        try (var inputStream = WordGenerator.class.getResourceAsStream("/dictionary.json")) {
+            if (inputStream == null) {
+                throw new FileNotFoundException("Файл dictionary.json не найден");
+            }
+            try {
+                var jsonNode = mapper.readTree(inputStream);
+                jsonNode = jsonNode.get(category.name().toLowerCase()).get(level.name().toLowerCase()).get(wordNum);
+                word = mapper.treeToValue(jsonNode, Word.class);
+                word.levels(level);
+                word.category(category);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-        try {
-            var jsonNode = mapper.readTree(inputStream);
-            jsonNode = jsonNode.get(category.name().toLowerCase()).get(level.name().toLowerCase()).get(wordNum);
-            word = mapper.treeToValue(jsonNode, Word.class);
-            word.levels(level);
-            word.category(category);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        inputStream.close();
         log.info("Generated word: {}", word);
         return word;
     }

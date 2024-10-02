@@ -24,12 +24,12 @@ public final class GameUIImpl implements GameUI {
     private final JsonNode rootNode;
 
     private GameUIImpl() throws IOException {
-        InputStream inputStream = GameUIImpl.class.getResourceAsStream("/ui.json");
-        if (inputStream == null) {
-            throw new FileNotFoundException("Файл ui.json не найден.");
+        try (InputStream inputStream = GameUIImpl.class.getResourceAsStream("/ui.json")) {
+            if (inputStream == null) {
+                throw new FileNotFoundException("Файл ui.json не найден.");
+            }
+            rootNode = mapper.readTree(inputStream);
         }
-        rootNode = mapper.readTree(inputStream);
-        inputStream.close();
     }
 
     public static GameUI getInstance() throws IOException {
