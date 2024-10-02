@@ -3,7 +3,6 @@ package backend.academy.gallows.ui;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,9 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public final class GameUIImpl implements GameUI {
     private static final String NODE_OF_JSON_FILE = "game_menus";
+    private static GameUI instance;
     private final ObjectMapper mapper = new ObjectMapper();
     private final JsonNode rootNode;
-    private static GameUI instance;
 
     private GameUIImpl() throws IOException {
         InputStream inputStream = GameUIImpl.class.getResourceAsStream("/ui.json");
@@ -35,7 +34,7 @@ public final class GameUIImpl implements GameUI {
 
     public static GameUI getInstance() throws IOException {
         if (instance == null) {
-                instance = new GameUIImpl();
+            instance = new GameUIImpl();
         }
         return instance;
     }
@@ -53,6 +52,7 @@ public final class GameUIImpl implements GameUI {
 
     /**
      * Метод для отрисовки любого из меню
+     *
      * @param menuType - принимает на вход строку
      *                 в который определяется узел в json файле с интерфейсом
      *                 если делать для каждого меню отдельный метод то

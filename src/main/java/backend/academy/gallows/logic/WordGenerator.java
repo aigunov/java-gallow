@@ -4,10 +4,8 @@ import backend.academy.gallows.model.Categories;
 import backend.academy.gallows.model.Levels;
 import backend.academy.gallows.model.Word;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Random;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +28,8 @@ public final class WordGenerator {
 
     /**
      * главная задача метода - вернуть word для отгадывания
-     * @param level - какой уровень сложности хочет игрок
+     *
+     * @param level    - какой уровень сложности хочет игрок
      * @param category - какую категорию выбрал игрок
      * @return word
      */
@@ -42,7 +41,7 @@ public final class WordGenerator {
         category = (category == null || category == Categories.RANDOM) ? Categories.values()[num] : category;
 
         var inputStream = WordGenerator.class.getResourceAsStream("/dictionary.json");
-        if(inputStream==null){
+        if (inputStream == null) {
             throw new FileNotFoundException("Файл dictionary.json не найден");
         }
         try {

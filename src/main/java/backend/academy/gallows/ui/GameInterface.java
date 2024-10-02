@@ -23,11 +23,9 @@ public class GameInterface {
     private static final String HAPPY_EMOJI = "happy_smiley";
     private static final String SAD_EMOJI = "goodbye_smiley";
     private static final String DEAD_EMOJI = "dead_smiley";
-
+    private static GameInterface instance;
     private final GameUI ui = GameUIImpl.getInstance();
     private final Scanner sc = new Scanner(System.in);
-
-    private static GameInterface instance;
 
     private GameInterface() throws IOException {
     }

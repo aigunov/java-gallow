@@ -21,13 +21,11 @@ import lombok.Setter;
 @Setter
 @Builder(toBuilder = true)
 public class GamePlayParameters {
+    int step = 0;
     private Levels level;
     private Categories category;
     private Word word;
     private List<Character> characters;
-
-    int step = 0;
-
     private int solved;
     private int hits;
 }

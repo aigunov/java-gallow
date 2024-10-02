@@ -5,9 +5,7 @@ import backend.academy.gallows.model.GameResults;
 import backend.academy.gallows.model.Word;
 import backend.academy.gallows.model.WordFromDictionaryNotValid;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -29,9 +27,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GameLogic {
     private static GameLogic instance;
+    private final Scanner sc = new Scanner(System.in);
     private WordGenerator generator = new WordGenerator();
     private List<Character> characters = new ArrayList<>();
-    private final Scanner sc = new Scanner(System.in);
     private GamePlayParameters params = new GamePlayParameters();
     private Word word;
     private int guessed;
