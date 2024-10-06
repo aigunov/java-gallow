@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  * Класс для извлечения из dictionary.json нужного слова по переданнам конфигурациям
  * если конфигурации не заданы, то слово подбирается случайным образом
  */
-@SuppressWarnings({"RegexpSinglelineJava", "MagicNumber", "ParameterAssignment"})
+@SuppressWarnings({"RegexpSinglelineJava", "MagicNumber"})
 @Getter
 @Setter
 @Slf4j
@@ -29,16 +29,18 @@ public final class WordGenerator {
     /**
      * главная задача метода - вернуть word для отгадывания
      *
-     * @param level    - какой уровень сложности хочет игрок
-     * @param category - какую категорию выбрал игрок
+     * @param levelArg    - какой уровень сложности хочет игрок
+     * @param categoryArg - какую категорию выбрал игрок
      * @return word
      */
-    public Word generateWord(Levels level, Categories category) throws IOException {
+    public Word generateWord(Levels levelArg, Categories categoryArg) throws IOException {
         var random = new Random();
         int num = random.nextInt(NUMBER_FOR_CONFIGS);
         int wordNum = random.nextInt(NUMBER_FOR_WORDS);
-        level = (level == null || level == Levels.RANDOM) ? Levels.values()[num] : level;
-        category = (category == null || category == Categories.RANDOM) ? Categories.values()[num] : category;
+        Levels level = (levelArg == null || levelArg == Levels.RANDOM)
+            ? Levels.values()[num] : levelArg;
+        Categories category = (categoryArg == null || categoryArg == Categories.RANDOM)
+            ? Categories.values()[num] : categoryArg;
 
         try (var inputStream = WordGenerator.class.getResourceAsStream("/dictionary.json")) {
             if (inputStream == null) {
